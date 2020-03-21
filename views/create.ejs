@@ -1,134 +1,160 @@
 <div class="col-md-12">
-	<h3>新增接口</h3>
-	<input id="projectName" type="hidden" value="<%= projectName %>">
-	<input id="projectId" type="hidden" value="<%= projectId %>">
-	<% if(isEdit) { %>
-		<input id="apiId" type="hidden" value="<%= api.id %>">
-	<% } %>
-	<div class="input-group input-group-lg mb-15">
-		<span class="input-group-addon">接口名称</span>
-			<% if(isEdit) { %>
-				<input type="text" id="apiname" class="form-control" value="<%= api.name %>">
-			<% } else { %>
-				<input type="text" id="apiname" class="form-control" value="<%= projectName %>-">
-			<% } %>
-	</div>
-	<div class="input-group input-group-lg mb-15">
-		<span class="input-group-addon">接口URL</span>
-			<% if(isEdit) { %>
-				<input type="text" id="apiurl" class="form-control" value="<%= api.url %>">
-			<% } else { %>
-				<input type="text" id="apiurl" class="form-control" value="<%= projectUrl %>/">
-			<% } %>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
-			<div class="y Q">
-				<div class="C A">JSON字符串</div>
-			</div>
-			<% if(isEdit) { %>
-				<textarea class="edit-area J x P" id="jsonText">
+  <h3>新增接口</h3>
+  <div style="text-align:center">
+    <a class="btn btn-lg btn-primary mb-15" id="ok-btn">编辑完成，保存接口</a>
+  </div>
+  <input id="projectName" type="hidden" value="<%= projectName %>" />
+  <input id="projectId" type="hidden" value="<%= projectId %>" />
+  <% if(isEdit) { %>
+  <input id="apiId" type="hidden" value="<%= api.id %>" />
+  <% } %>
+  <div class="input-group input-group-lg mb-15">
+    <span class="input-group-addon">接口名称</span>
+    <% if(isEdit) { %>
+    <input
+      type="text"
+      id="apiname"
+      class="form-control"
+      value="<%= api.name %>"
+    />
+    <% } else { %>
+    <input
+      type="text"
+      id="apiname"
+      class="form-control"
+      value="<%= projectName %>-"
+    />
+    <% } %>
+  </div>
+  <div class="input-group input-group-lg mb-15">
+    <span class="input-group-addon">接口URL</span>
+    <% if(isEdit) { %>
+    <input
+      type="text"
+      id="apiurl"
+      class="form-control"
+      value="<%= api.url %>"
+    />
+    <% } else { %>
+    <input
+      type="text"
+      id="apiurl"
+      class="form-control"
+      value="<%= projectUrl %>/"
+    />
+    <% } %>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="y Q">
+        <div class="C A">JSON字符串</div>
+      </div>
+      <% if(isEdit) { %>
+      <textarea class="edit-area J x P" id="jsonText">
 					<%= api.content.trim() %>
-				</textarea>
-			<% } else { %>
-				<textarea class="edit-area J x P" id="jsonText"></textarea>
-			<% } %>
-		</div>
-		<div class="col-md-6">
-			<div class="K F" id="fU">
-				<div class="y Q">
-					<div class="C A" id="hW"></div>
-					<div class="C B" id="kZ"></div>
-				</div>
-				<div class="z L">
-					<div class="E edit-area" id="dS">
-						<div class="C A">
-							<div class="w">
-								<div class="P" id="iX">
-								</div>
-							</div>
-						</div>
-						<div class="C B">
-							<div class="w D">
-								<div class="P" id="lA">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+				</textarea
+      >
+      <% } else { %>
+      <textarea class="edit-area J x P" id="jsonText"></textarea>
+      <% } %>
+    </div>
+    <div class="col-md-6">
+      <div class="K F" id="fU">
+        <div class="y Q">
+          <div class="C A" id="hW"></div>
+          <div class="C B" id="kZ"></div>
+        </div>
+        <div class="z L">
+          <div class="E edit-area" id="dS">
+            <div class="C A">
+              <div class="w">
+                <div class="P" id="iX"></div>
+              </div>
+            </div>
+            <div class="C B">
+              <div class="w D">
+                <div class="P" id="lA"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<h3 class="apiInfo">备注信息</h3>
-	<div class="mb-15">
-		<% if(isEdit) { %>
-			<textarea id="api-introduce" class="col-md-12 edit-remark">
+  <h3 class="apiInfo">备注信息</h3>
+  <div class="mb-15">
+    <% if(isEdit) { %>
+    <textarea id="api-introduce" class="col-md-12 edit-remark">
 				<%= api.desc.trim() %>
-			</textarea>
-		<% } else { %>
-			<textarea id="api-introduce" class="col-md-12 edit-remark" placeholder="填写接口备注信息"></textarea>
-		<% } %>
-	</div>
-	<div style="text-align:center">
-		<a class="btn btn-lg btn-primary mb-15" id="ok-btn">编辑完成，保存接口</a>
-	</div>
+			</textarea
+    >
+    <% } else { %>
+    <textarea
+      id="api-introduce"
+      class="col-md-12 edit-remark"
+      placeholder="填写接口备注信息"
+    ></textarea>
+    <% } %>
+  </div>
 </div>
 <script type="text/javascript" src="/lib/editJson.min.js"></script>
 <script>
-	function checkJSON() {
-		var $textArea = $("#jsonText"),
-			jsonStr = $('#jsonText').val();
-		try {
-			jsonStr = JSON.parse(jsonStr);
-		} catch (err) {
-			$textArea.select(); // 选择对象
-			document.execCommand("Copy"); // 执行浏览器复制命令
-			if (confirm("接口数据JSON格式有误，已复制到剪贴板，是否去检查格式?")) {
-				window.open("http://www.bejson.com/")
-			}
-			return false;
-		}
-		return true;
-	}
+  function checkJSON() {
+    var $textArea = $('#jsonText'),
+      jsonStr = $('#jsonText').val()
+    try {
+      jsonStr = JSON.parse(jsonStr)
+    } catch (err) {
+      $textArea.select() // 选择对象
+      document.execCommand('Copy') // 执行浏览器复制命令
+      if (confirm('接口数据JSON格式有误，已复制到剪贴板，是否去检查格式?')) {
+        window.open('http://www.bejson.com/')
+      }
+      return false
+    }
+    return true
+  }
 
-	$("#ok-btn").click(function () {
-		var stringValue = $("#jsonText").val(),
-			apiname = $("#apiname").val(),
-			projectName = $("#projectName").val(),
-			projectId = $('#projectId').val(),
-			apiurl = $("#apiurl").val(),
-			apiId = $("#apiId").val();
+  $('#ok-btn').click(function() {
+    var stringValue = $('#jsonText').val(),
+      apiname = $('#apiname').val(),
+      projectName = $('#projectName').val(),
+      projectId = $('#projectId').val(),
+      apiurl = $('#apiurl').val(),
+      apiId = $('#apiId').val()
 
-		console.log(!checkJSON())
-		if (!checkJSON()) {
-			return false;
-		}
+    console.log(!checkJSON())
+    if (!checkJSON()) {
+      return false
+    }
 
-		$.ajax({
-			url: '/detail/save',
-			type: 'post',
-			data: {
-				'name': apiname,
-				'url': apiurl,
-				'projectName': projectName,
-				'projectId': projectId,
-				"desc": $("#api-introduce").val().trim(),
-				'content': stringValue.trim(),
-				'apiId': apiId
-			},
-			success: function () {
-				alert('保存成功')
-				history.go(-1)
-				location.reload()
-				// window.history.back();
-			},
-			error: function () {
-				alert("保存失败，请重试！")
-				history.go(-1)
-				// location.reload()
-				// window.history.back();
-			}
-		})
-	})
+    $.ajax({
+      url: '/detail/save',
+      type: 'post',
+      data: {
+        name: apiname,
+        url: apiurl,
+        projectName: projectName,
+        projectId: projectId,
+        desc: $('#api-introduce')
+          .val()
+          .trim(),
+        content: stringValue.trim(),
+        apiId: apiId
+      },
+      success: function() {
+        alert('保存成功')
+        history.go(-1)
+        location.reload()
+        // window.history.back();
+      },
+      error: function() {
+        alert('保存失败，请重试！')
+        history.go(-1)
+        // location.reload()
+        // window.history.back();
+      }
+    })
+  })
 </script>

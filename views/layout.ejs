@@ -1,84 +1,100 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Mock平台</title>
+    <link rel="stylesheet" href="/styles/parse.css" />
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <script type="text/javascript" src="/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/bootstrap.min.js"></script>
 
-<head>
-  <title>QuickMock</title>
-  <link rel='stylesheet' href="/styles/parse.css" />
-  <link rel='stylesheet' href="/styles/bootstrap.min.css" />
-  <link rel='stylesheet' href="/styles/main.css" />
-  <script type="text/javascript" src="/lib/jquery.min.js"></script>
-  <script type="text/javascript" src="/lib/bootstrap.min.js"></script>
-</head>
+    <link
+      href="jsoneditor/dist/jsoneditor.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="jsoneditor/dist/jsoneditor.min.js"></script>
+  </head>
 
-<body>
-  <div class="header">
-    <span class="glyphicon glyphicon-sunglasses title-icon"></span>
-    <a class="title" href="/list">Quick Mock</a>
-    <!--<div class="search-tab">-->
+  <body>
+    <div class="header">
+      <a class="title" href="/list">Mock平台</a>
+      <!--<div class="search-tab">-->
       <!--<span class="search-btn" onclick="submitSearch()">本地接口搜索</span>-->
       <!--<input class="search" id="search" placeholder="输入接口中文名称或英文url" onkeyup="keyForm.call(this,event)">-->
-    <!--</div>-->
-    <a href="https://github.com/zouyifeng/QuickMock" class="github" target="_blank">&nbsp;</a>
-  </div>
-  <ol class="breadcrumb crumb">
-    <li><a href="/list">项目列表</a></li>
-    <!--<li class="active">项目详情</li>-->
-  </ol>
-  <div class="container-fluid">
-    <div class="col-md-10 col-md-offset-1">
-      <%- body %>
+      <!--</div>-->
     </div>
-  </div>
-  <div id="myModal" class="modal fade">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">新增项目</h4>
-        </div>
-        <div class="modal-body col-sm-offset-1">
-          <label for="name">项目名</label>
-          <div class="input-group col-sm-10">
-            <input type="text" class="form-control" id="name">
+    <ol class="breadcrumb crumb">
+      <li><a href="/list">项目列表</a></li>
+      <!--<li class="active">项目详情</li>-->
+    </ol>
+    <div class="container-fluid">
+      <div class="col-md-10 col-md-offset-1">
+        <%- body %>
+      </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">新增项目</h4>
           </div>
-          <label for="url">项目url</label>
-          <div class="input-group col-sm-10">
-            <input type="text" class="form-control" id="url">
+          <div class="modal-body col-sm-offset-1">
+            <label for="name">项目名</label>
+            <div class="input-group col-sm-10">
+              <input type="text" class="form-control" id="name" />
+            </div>
+            <label for="url">项目url</label>
+            <div class="input-group col-sm-10">
+              <input type="text" class="form-control" id="url" />
+            </div>
+            <label for="desc">项目描述</label>
+            <div class="input-group col-sm-10">
+              <input type="text" class="form-control" id="desc" />
+            </div>
           </div>
-          <label for="desc">项目描述</label>
-          <div class="input-group col-sm-10">
-            <input type="text" class="form-control" id="desc">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              close
+            </button>
+            <button id="addNewProject" type="button" class="btn btn-primary">
+              新增项目
+            </button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
-          <button id="addNewProject" type="button" class="btn btn-primary">新增项目</button>
         </div>
       </div>
     </div>
-  </div>
-</body>
-<script type="text/javascript">
-  $('#addNewProject').click(function () {
-    $.ajax({
-      url: '/list/create',
-      type: 'post',
-      data: {
-        name: $('#name').val(),
-        url: $('#url').val(),
-        desc: $("#desc").val()
-      },
-      success: function (data) {
-        console.log(data)
-        alert(data.msg)
-        window.location.reload();
-      },
-      error: function (data) {
-        console.log(data)
-        alert(data.responseJSON.msg)
-      }
+  </body>
+  <script type="text/javascript">
+    $('#addNewProject').click(function() {
+      $.ajax({
+        url: '/list/create',
+        type: 'post',
+        data: {
+          name: $('#name').val(),
+          url: $('#url').val(),
+          desc: $('#desc').val()
+        },
+        success: function(data) {
+          console.log(data)
+          alert(data.msg)
+          window.location.reload()
+        },
+        error: function(data) {
+          console.log(data)
+          alert(data.responseJSON.msg)
+        }
+      })
     })
-  })
-</script>
-
+  </script>
 </html>

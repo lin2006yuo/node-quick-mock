@@ -5,6 +5,7 @@ var util = require('../common/utils')
 var project = require('../models/projects')
 var api = require('../models/apis')
 
+// 查看详情
 router.get('/detail/:projectId', (req, res) => {
     var projectId = req.params.projectId
 
@@ -156,8 +157,10 @@ router.all('/api/:apiId', (req, res) => {
 })
   
 router.get('*', (req, res) => {
-    if (req.url) {
-        api.findOneApiByUrl(req.url).then(data => {
+    const [url, search] = req.url.split('?')
+    console.log(url)
+    if (url) {
+        api.findOneApiByUrl(url).then(data => {
             if (data) {
                 res.json(JSON.parse(data.content))
             }
