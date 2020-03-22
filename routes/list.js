@@ -7,40 +7,31 @@ var util = require('../common/utils');
 var project = require('../models/projects')
 var api = require('../models/apis')
 
-//接口首页
-router.get('/list', (req, res) => {
+// 获取所有项目
+router.get('/list', (req, res, next) => {
 	project.selectAllProject().then(list => {
-		if (list.length > 0) {
-			res.render('project_list', {
-				haveList: true,
-				dataList: list,
-				page: 'list'
-			})
-		} else {
-			res.render('project_list', {
-				haveList: false,
-				dataList: [],
-				page: 'list'
-			})
-		}
+		res.json({
+			code: 0,
+			msg: "ok",
+			data: list.length > 0 ? list : []
+		})
 	})
 	.catch((response) => {
-		res.render('project_list', {
-			haveList: false,
-			dataList: [],
-			page: 'list'
-		})
+		res.json(list)
 	})
 })
 
+// 创建项目
 router.post('/list/create', (req, res) => {
 
-	var name = req.body.name;
-	var url = req.body.url;
-	var desc = req.body.desc;
+	const name = req.body.name;
+	const url = req.body.url;
+	const desc = req.body.desc;
 
-	project.addProject(req.body).then(function () {
-		res.status(200).json({msg: '创建成功！'}).end()
+	project.addProject({name, url, desc}).then(function (data) {
+		res.status(200).json({msg: '创建成功！', code: 0, data}).end()
+	}).catch(err => {
+		res.status(200).json({msg: '创建失败', code: 1, data: err})
 	})
 })
 
