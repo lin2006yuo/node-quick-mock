@@ -5,7 +5,7 @@ var util = require("../common/utils")
 var project = require("../models/projects")
 var api = require("../models/apis")
 
-// 查看详情
+// 查看接口列表
 router.get("/detail", (req, res) => {
   var projectId = req.query.id
   project.selectOneProject(projectId).then(selectedProject => {
@@ -22,6 +22,31 @@ router.get("/detail", (req, res) => {
       })
     })
   })
+})
+
+// 查询接口详情
+router.get("/detail/edit", (req, res) => {
+  var apiId = req.query.id
+
+  if (!apiId) {
+    res.redirect("/")
+  } else {
+    api.selectOneApi(apiId).then(api => {
+      project.selectOneProject(api.project_id).then(project => {
+        var projectName = project.name
+        var projectId = project.id
+        res.json({
+          code: 0,
+          msg: "ok",
+          data: {
+            projectName: projectName,
+            projectId: projectId,
+            ...api
+          }
+        })
+      })
+    })
+  }
 })
 
 //存储json
@@ -46,7 +71,7 @@ router.post("/detail/save", (req, res) => {
         })
         .then(function() {
           res.json({
-            success: true,
+            code: 0,
             message: "保存成功"
           })
         })
@@ -67,7 +92,7 @@ router.post("/detail/save", (req, res) => {
         )
         .then(function() {
           res.json({
-            success: true,
+            code: 0,
             message: "更新成功"
           })
         })
@@ -80,30 +105,6 @@ router.post("/detail/save", (req, res) => {
   }
 })
 
-//编辑接口页面
-router.get("/detail/edit", (req, res) => {
-  var apiId = req.query.id
-
-  if (!apiId) {
-    res.redirect("/")
-  } else {
-    api.selectOneApi(apiId).then(api => {
-      project.selectOneProject(api.project_id).then(project => {
-        var projectName = project.name
-        var projectId = project.id
-        res.json({
-          code: 0,
-          msg: "ok",
-          data: {
-            api: api,
-            projectName: projectName,
-            projectId: projectId
-          }
-        })
-      })
-    })
-  }
-})
 
 //删除接口
 router.post("/detail/delete", (req, res) => {
