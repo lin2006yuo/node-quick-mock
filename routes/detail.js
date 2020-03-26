@@ -54,7 +54,6 @@ router.post("/detail/save", (req, res) => {
   var name = req.body.name.replace(/\s/g, ""),
     url = req.body.url.replace(/\s/g, ""),
     projectId = req.body.projectId.replace(/\s/g, ""),
-    projectName = req.body.projectName,
     apiId = req.body.apiId,
     desc = req.body.desc,
     content = req.body.content
@@ -72,7 +71,7 @@ router.post("/detail/save", (req, res) => {
         .then(function() {
           res.json({
             code: 0,
-            message: "保存成功"
+            msg: "新增成功"
           })
         })
     } else {
@@ -93,7 +92,7 @@ router.post("/detail/save", (req, res) => {
         .then(function() {
           res.json({
             code: 0,
-            message: "更新成功"
+            msg: "修改成功"
           })
         })
     }
