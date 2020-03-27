@@ -10,9 +10,7 @@ var api = require('../models/apis')
 // 获取所有项目
 router.get('/list', (req, res, next) => {
 	project.selectAllProject().then(list => {
-		res.json({
-			code: 0,
-			msg: "ok",
+		res.status(200).json({
 			data: list.length > 0 ? list : []
 		})
 	})
@@ -31,7 +29,7 @@ router.post('/list/create', (req, res) => {
 	project.addProject({name, url, desc}).then(function (data) {
 		res.status(200).json({msg: '创建成功！', code: 0, data}).end()
 	}).catch(err => {
-		res.status(200).json({msg: '创建失败', code: 1, data: err})
+		res.status(201).json({msg: '重复的项目名字', code: 1, data: err})
 	})
 })
 
